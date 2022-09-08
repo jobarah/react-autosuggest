@@ -1,4 +1,4 @@
-# React Calendar
+# React Autosuggest
 
 [![GitHub license](https://img.shields.io/github/license/sultan99/react-on-lambda.svg)](https://github.com/sultan99/react-on-lambda/blob/master/LICENSE)
 
@@ -61,25 +61,13 @@ $ npm run build
 
 **npm build** will generate a production bundle.
 
-The first thing you'll see is the dashboard.
+This is an example of how the suggestion selection looks like when triggered with the mouse
 
-<img src="/images/home-vw.JPG" alt="dashboard">
+<img src="/images/mouse.gif" alt="mouse">
 
-To add a new reminder just click the button "Create reminder"
+This is an example of how the suggestion selection looks like when triggered with the keyboard
 
-<img src="/images/new-reminder.JPG" alt="new reminder">
-
-Don't forget to fill the required fields otherwise you'll receive some feedback.
-
-<img src="/images/validations.JPG" alt="validations">
-
-Then you can hit any of the date cells for a summary
-
-<img src="/images/reminder-summary.JPG" alt="Summary">
-
-You can also edit your reminders
-
-<img src="/images/edit-reminder.JPG" alt="Edit">
+<img src="/images/Keyboard.gif" alt="keyboard">
 
 ## Feedback
 
@@ -87,7 +75,7 @@ Any questions or suggestions?
 
 You are welcome to discuss it on:
 
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/ChristianConary)
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/jobarah01)
 
 <br/>
 <br/>
