@@ -1,23 +1,18 @@
-
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { AutoComplete } from './components/Autocomplete';
-import { getStocks } from './services/suggestions'
+import { getSuggestions } from './services/suggestions'
 import { Suggestion } from './types/types';
 
 function App() {
   const [suggestions, setSuggestions] = useState<Array<Suggestion>>([])
   const [, setValue] = useState<string>('')
 
-  const getSuggestions = async () => {
-    const sug = await getStocks()
+  const getSuggestions = async (filter: string) => {
+    const sug = await getSuggestions(filter)
 
     setSuggestions(sug)
   }
-
-  useEffect(() => {
-    getSuggestions()
-  }, [])
 
   return (
     <div className="App">
@@ -25,10 +20,11 @@ function App() {
         <div className='headLine'>
           Search.IO
         </div>
-        <img className="search" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg" alt="" />
+        <img className="search" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg" alt="search" />
       </div>
       <AutoComplete
         onSuggestionSelected={setValue}
+        onInputChange={getSuggestions}
         suggestions={suggestions}
       />
     </div>

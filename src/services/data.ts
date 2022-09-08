@@ -52,3 +52,4 @@ export const suggestions: Array<Suggestion> = [
     { abbr: 'YESBANK', name: 'Yes Bank Ltd.' },
     { abbr: 'ZEEL', name: 'Zee Entertainment Enterprises Ltd.' }
   ];
+  

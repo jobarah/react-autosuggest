@@ -3,16 +3,26 @@ import { Suggestion } from '../types/types'
 import './Autocomplete.css';
 
 interface AutoCompleteProps {
+  suggestions: Array<Suggestion>,
   onSuggestionSelected: (suggestion: string) => void,
-  suggestions: Array<Suggestion>
+  onInputChange: (input: string) => void
 }
 
 export function AutoComplete(props: AutoCompleteProps): JSX.Element {
-  const { suggestions, onSuggestionSelected } = props;
+  const {
+    suggestions,
+    onSuggestionSelected,
+    onInputChange
+  } = props;
   const [userInput, setUserInput] = useState<string>('')
   const [suggestionMatches, setSuggestionMatches] = useState<Array<string>>([])
   const [activeSuggestion, setActiveSuggestion] = useState<number>(0)
 
+  /*
+    in order for this handler to be prod ready, it would require a debounce, to avoid triggering unneeded requests to the api
+    a local/manual implementation of debounce was written but I ran out of time before writing the usage of it in the component,
+    additionally, this method would be slightly different if the suggestions were not fetched, it would most require a localSuggestions.filter()-like implementation
+  */
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const text = event.currentTarget.value
 
@@ -23,11 +33,10 @@ export function AutoComplete(props: AutoCompleteProps): JSX.Element {
       onSuggestionSelected(suggestionMatches[activeSuggestion])
       return
     }
-
-    const filteredSuggestions = suggestions.filter(suggestion => suggestion.name.toLowerCase().indexOf(text.toLowerCase()) > -1);
+    onInputChange(text)
     
     setUserInput(text)
-    setSuggestionMatches(filteredSuggestions.map(sug => sug.name))
+    setSuggestionMatches(suggestions.map(sug => sug.name))
   }
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
