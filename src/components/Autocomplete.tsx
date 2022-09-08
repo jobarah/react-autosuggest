@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Suggestion } from '../types/types'
 import './Autocomplete.css';
 
@@ -19,32 +19,32 @@ export function AutoComplete(props: AutoCompleteProps): JSX.Element {
     if (!text.length) {
       setUserInput('')
       setSuggestionMatches([])
+      setActiveSuggestion(0)
       return
     }
 
     const filteredSuggestions = suggestions.filter(suggestion => suggestion.name.toLowerCase().indexOf(text.toLowerCase()) > -1);
-
+    
     setUserInput(text)
     setSuggestionMatches(filteredSuggestions.map(sug => sug.name))
   }
 
-  const onKeyDown = (event: KeyboardEvent) => {
-    // User pressed the enter key
-    if (event.keyCode === 13) {
-      setActiveSuggestion(0);
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setUserInput(suggestionMatches[activeSuggestion])
+      setSuggestionMatches([])
+      setActiveSuggestion(0)
     }
-    // User pressed the up arrow
-    else if (event.keyCode === 38) {
+    else if (event.key === 'ArrowUp') {
       if (activeSuggestion === 0) {
-        return;
+        return
       }
 
       setActiveSuggestion(activeSuggestion - 1);
     }
-    // User pressed the down arrow
-    else if (event.keyCode === 40) {
+    else if (event.key === 'ArrowDown') {
       if (activeSuggestion - 1 === suggestionMatches.length) {
-        return;
+        return
       }
 
       setActiveSuggestion(activeSuggestion + 1);
@@ -58,10 +58,17 @@ export function AutoComplete(props: AutoCompleteProps): JSX.Element {
         type="text"
         onChange={onChange}
         value={userInput}
+        onKeyDown={onKeyDown}
       />
-      <ul>
-        {suggestionMatches.map(suggestionMatch => <li>{paintMatch(suggestionMatch, userInput)}</li>)}
-      </ul>
+      {userInput.length && !suggestionMatches.length
+        ? 
+        <div className='info'>No suggestions found.</div>
+        :
+        <ul>
+          {suggestionMatches.map((suggestionMatch, index) => <li key={`suggestionMatch-${index}`} className={index === activeSuggestion ? 'active' : ''}>{paintMatch(suggestionMatch, userInput)}</li>)}
+        </ul>       
+      }
+      
     </div>
   )
 }

@@ -1,3 +1,44 @@
+
+
 .highlighted {
-  background-color: #FFFF00
+  background-color: rgba(162, 189, 239, 0.5);
+  border-radius: 4px;
+}
+
+.active {
+  background-color: rgba(84, 92, 130, 0.5)
+}
+
+.input-wrapper {
+  width: 80%;
+  height: 200px;
+}
+.info {
+  color: #607D8B;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  height: 20px;
+}
+
+li {
+  list-style-type: none;
+  border-radius: 4px;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 0;
+  height: 20px;
+  border-radius: 4px;
+  font-weight: 300;
+  margin-right: 20px;
+  transition: none;
+  box-shadow: none;
+  font-size: 16px;
 }

@@ -1,28 +1,33 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { AutoComplete } from './components/Autocomplete';
 import { getStocks } from './services/suggestions'
+import { Suggestion } from './types/types';
 
 function App() {
+  const [suggestions, setSuggestions] = useState<Array<Suggestion>>([])
+
+  const getSuggestions = async () => {
+    const sug = await getStocks()
+
+    setSuggestions(sug)
+  }
+
+  useEffect(() => {
+    getSuggestions()
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='header'>
+        <div className='headLine'>
+          Search.IO
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg" alt="" />
+      </div>
       <AutoComplete
         input='this is just a test'
-        suggestions={getStocks()}
+        suggestions={suggestions}
       />
     </div>
   );
