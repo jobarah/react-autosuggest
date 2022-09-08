@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import { AutoComplete } from './components/Autocomplete';
-import { getSuggestions } from './services/suggestions'
+import { fetchSuggestions } from './services/suggestions'
 import { Suggestion } from './types/types';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
   const [, setValue] = useState<string>('')
 
   const getSuggestions = async (filter: string) => {
-    const sug = await getSuggestions(filter)
+    const sug = await fetchSuggestions(filter)
 
     setSuggestions(sug)
   }
