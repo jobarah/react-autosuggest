@@ -67,7 +67,7 @@ This is an example of how the suggestion selection looks like when triggered wit
 
 This is an example of how the suggestion selection looks like when triggered with the keyboard
 
-<img src="/images/Keyboard.gif" alt="keyboard">
+<img src="/images/keyboard.gif" alt="keyboard">
 
 ## Feedback
 
