@@ -1,0 +1,1 @@
+export type Suggestion = Record<string, string>
