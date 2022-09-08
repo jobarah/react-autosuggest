@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Suggestion } from '../types/types'
 import './Autocomplete.css';
 
 interface AutoCompleteProps {
-  input: string,
+  onSuggestionSelected: (suggestion: string) => void,
   suggestions: Array<Suggestion>
 }
 
 export function AutoComplete(props: AutoCompleteProps): JSX.Element {
-  const { suggestions } = props;
+  const { suggestions, onSuggestionSelected } = props;
   const [userInput, setUserInput] = useState<string>('')
   const [suggestionMatches, setSuggestionMatches] = useState<Array<string>>([])
   const [activeSuggestion, setActiveSuggestion] = useState<number>(0)
@@ -20,6 +20,7 @@ export function AutoComplete(props: AutoCompleteProps): JSX.Element {
       setUserInput('')
       setSuggestionMatches([])
       setActiveSuggestion(0)
+      onSuggestionSelected(suggestionMatches[activeSuggestion])
       return
     }
 
@@ -34,6 +35,7 @@ export function AutoComplete(props: AutoCompleteProps): JSX.Element {
       setUserInput(suggestionMatches[activeSuggestion])
       setSuggestionMatches([])
       setActiveSuggestion(0)
+      onSuggestionSelected(suggestionMatches[activeSuggestion])
     }
     else if (event.key === 'ArrowUp') {
       if (activeSuggestion === 0) {
@@ -51,6 +53,15 @@ export function AutoComplete(props: AutoCompleteProps): JSX.Element {
     }
   };
 
+  const onClick = (event: React.MouseEvent<HTMLLIElement>, index: number) => {
+    setUserInput(suggestionMatches[index])
+    setSuggestionMatches([])
+    onSuggestionSelected(suggestionMatches[index])
+  }
+
+  const onMouseIn = (event: MouseEvent<HTMLLIElement>, index: number) => {
+    setActiveSuggestion(index);
+  }
 
   return (
     <div className='input-wrapper'>
@@ -60,13 +71,18 @@ export function AutoComplete(props: AutoCompleteProps): JSX.Element {
         value={userInput}
         onKeyDown={onKeyDown}
       />
-      {userInput.length && !suggestionMatches.length
-        ? 
-        <div className='info'>No suggestions found.</div>
-        :
-        <ul>
-          {suggestionMatches.map((suggestionMatch, index) => <li key={`suggestionMatch-${index}`} className={index === activeSuggestion ? 'active' : ''}>{paintMatch(suggestionMatch, userInput)}</li>)}
-        </ul>       
+      {
+        <ul className='suggestions-wrapper'>
+          {suggestionMatches.map((suggestionMatch, index) => (
+            <li
+              key={`suggestionMatch-${index}`}
+              onClick={(event) => onClick(event, index)}
+              onMouseEnter={(event) => onMouseIn(event, index)}
+              className={index === activeSuggestion ? 'suggestion active' : 'suggestion'}>
+                { paintMatch(suggestionMatch, userInput) }
+            </li>
+          ))}
+        </ul>     
       }
       
     </div>

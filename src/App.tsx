@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import './App.css';
 import { AutoComplete } from './components/Autocomplete';
@@ -6,6 +7,7 @@ import { Suggestion } from './types/types';
 
 function App() {
   const [suggestions, setSuggestions] = useState<Array<Suggestion>>([])
+  const [, setValue] = useState<string>('')
 
   const getSuggestions = async () => {
     const sug = await getStocks()
@@ -23,10 +25,10 @@ function App() {
         <div className='headLine'>
           Search.IO
         </div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg" alt="" />
+        <img className="search" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg" alt="" />
       </div>
       <AutoComplete
-        input='this is just a test'
+        onSuggestionSelected={setValue}
         suggestions={suggestions}
       />
     </div>
